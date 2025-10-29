@@ -6,19 +6,23 @@
         DisplayCards()
         DisplayCards()
         If Me.theDeck.CardsRemaining = 0 Then
-            MsgBox("Game over! Would you like to continue?", MsgBoxStyle.YesNo)
-            If 
+            If MsgBox("Game over! Would you like to continue?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
+                Me.theDeck.tracker.Clear()
+                Me.theDeck._deck.Clear()
+                Do Until theDeck.CardsRemaining >= 52
+                    theDeck.Shuffle()
+                Loop
+                DisplayCards()
+                DisplayCards()
+            ElseIf MsgBox("Game over! Would you like to continue?", MsgBoxStyle.YesNo) = MsgBoxResult.No Then
+                Me.Close()
+            End If
+
         End If
     End Sub
 
     Private Sub RestartButton_Click(sender As Object, e As EventArgs) Handles RestartButton.Click
-        Me.theDeck.tracker.Clear()
-        Me.theDeck._deck.Clear()
-        Do Until theDeck.CardsRemaining >= 52
-            theDeck.Shuffle()
-        Loop
-        DisplayCards()
-        DisplayCards()
+
     End Sub
     Sub DisplayCards()
 
