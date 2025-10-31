@@ -1,35 +1,108 @@
-﻿Public Class GameForm
+﻿'Payden Hoskins
+'RCET 3371
+'10/30/25
+'GameOfWar
+'https://github.com/PaydenHoskins/GameofWar.git
+
+
+Public Class GameForm
     Private _cards As New Stack(Of CardClass)
     Dim theDeck As New DeckClass()
     Private count As Integer
+    Private cardCompare(1) As String
+    Public player1 As Integer
+    Public player2 As Integer
+    Public _player1%
+    Public _player2%
+
     Private Sub GameForm_Click(sender As Object, e As EventArgs) Handles Me.Click
-        DisplayCards()
-        DisplayCards()
+
+        Dim add As Integer = 0
+        DisplayCards(cardCompare(0))
+        DisplayCards(cardCompare(1))
+        If cardCompare(0) = cardCompare(1) Then
+            For i = 0 To 3
+                DisplayCards(cardCompare(0))
+                DisplayCards(cardCompare(1))
+            Next
+
+            weight1()
+            weight2()
+
+            add += 8
+            If cardCompare(0) = cardCompare(1) Then
+                For i = 0 To 3
+                    DisplayCards(cardCompare(0))
+                    DisplayCards(cardCompare(1))
+
+                Next
+
+                weight1()
+                weight2()
+
+                add += 8
+                If cardCompare(0) = cardCompare(1) Then
+                    Me.Close()
+                ElseIf cardCompare(0) <> cardCompare(1) Then
+                    If CInt(_player1) > CInt(_player2) Then
+                        Me.player1 += add
+                    ElseIf CInt(_player1) < CInt(_player2) Then
+                        Me.player2 += add
+                    End If
+                End If
+            ElseIf cardCompare(0) <> cardCompare(1) Then
+                If CInt(_player1) > CInt(_player2) Then
+                    Me.player1 += add
+                ElseIf CInt(_player1) < CInt(_player2) Then
+                    Me.player2 += add
+                End If
+            End If
+        ElseIf cardCompare(0) <> cardCompare(1) Then
+        End If
         If Me.theDeck.CardsRemaining = 0 Then
-            If MsgBox("Game over! Would you like to continue?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
+            If MsgBox($"Player1 wins. Game over! Would you like to continue?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
                 Me.theDeck.tracker.Clear()
                 Me.theDeck._deck.Clear()
                 Do Until theDeck.CardsRemaining >= 52
                     theDeck.Shuffle()
                 Loop
-                DisplayCards()
-                DisplayCards()
-            ElseIf MsgBox("Game over! Would you like to continue?", MsgBoxStyle.YesNo) = MsgBoxResult.No Then
-                Me.Close()
+                player1 = 0
+                player2 = 0
+                _player1 = 0
+                _player2 = 0
+                DisplayCards(cardCompare(0))
+                DisplayCards(cardCompare(1))
+            Else
+                Me.theDeck.tracker.Clear()
+                Me.theDeck._deck.Clear()
+                Do Until theDeck.CardsRemaining >= 52
+                    theDeck.Shuffle()
+                Loop
+                player1 = 0
+                player2 = 0
+                _player1 = 0
+                _player2 = 0
             End If
-
         End If
     End Sub
 
     Private Sub RestartButton_Click(sender As Object, e As EventArgs) Handles RestartButton.Click
-
+        Me.theDeck.tracker.Clear()
+        Me.theDeck._deck.Clear()
+        Do Until theDeck.CardsRemaining >= 52
+            theDeck.Shuffle()
+        Loop
+        player1 = 0
+        player2 = 0
+        _player1 = 0
+        _player2 = 0
     End Sub
-    Sub DisplayCards()
-
+    Sub DisplayCards(ByRef _drewCard As String)
         Dim g As Graphics = Me.CreateGraphics
         Dim I As Graphics = Me.CreateGraphics
         Dim rectangle As New Rectangle(0, 0, 150, 250)
         Dim dealtCard As CardClass = theDeck.DealCard()
+        _drewCard = $"{dealtCard.rank}"
         Dim offset% = 525
         Dim offset2% = 600
         count += 1
@@ -60,5 +133,71 @@
 
         Me.Text = theDeck.CardsRemaining
 
+    End Sub
+
+    Sub weight1()
+        Select Case cardCompare(0)
+            Case "2"
+                _player1 = 2
+            Case "3"
+                _player1 = 3
+            Case "4"
+                _player1 = 4
+            Case "5"
+                _player1 = 5
+            Case "6"
+                _player1 = 6
+            Case "7"
+                _player1 = 7
+            Case "8"
+                _player1 = 8
+            Case "9"
+                _player1 = 9
+            Case "10"
+                _player1 = 10
+            Case "j"
+                _player1 = 11
+            Case "k"
+                _player1 = 13
+            Case "q"
+                _player1 = 12
+            Case "a"
+                _player1 = 14
+        End Select
+    End Sub
+
+    Sub weight2()
+        Select Case cardCompare(0)
+            Case "2"
+                _player2 = 2
+            Case "3"
+                _player2 = 3
+            Case "4"
+                _player2 = 4
+            Case "5"
+                _player2 = 5
+            Case "6"
+                _player2 = 6
+            Case "7"
+                _player2 = 7
+            Case "8"
+                _player2 = 8
+            Case "9"
+                _player2 = 9
+            Case "10"
+                _player2 = 10
+            Case "j"
+                _player2 = 11
+            Case "k"
+                _player2 = 13
+            Case "q"
+                _player2 = 12
+            Case "a"
+                _player2 = 14
+        End Select
+    End Sub
+
+    Private Sub ExitButton_Click(sender As Object, e As EventArgs) Handles ExitButton.Click
+        Me.Close()
     End Sub
 End Class

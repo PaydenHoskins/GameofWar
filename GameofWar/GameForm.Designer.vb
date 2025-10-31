@@ -23,6 +23,7 @@ Partial Class GameForm
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.RestartButton = New System.Windows.Forms.Button()
+        Me.ExitButton = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'RestartButton
@@ -35,11 +36,21 @@ Partial Class GameForm
         Me.RestartButton.Text = "Restart"
         Me.RestartButton.UseVisualStyleBackColor = True
         '
+        'ExitButton
+        '
+        Me.ExitButton.Location = New System.Drawing.Point(1017, 826)
+        Me.ExitButton.Name = "ExitButton"
+        Me.ExitButton.Size = New System.Drawing.Size(74, 23)
+        Me.ExitButton.TabIndex = 1
+        Me.ExitButton.Text = "&Exit"
+        Me.ExitButton.UseVisualStyleBackColor = True
+        '
         'GameForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1184, 861)
+        Me.Controls.Add(Me.ExitButton)
         Me.Controls.Add(Me.RestartButton)
         Me.Name = "GameForm"
         Me.Text = "Form1"
@@ -48,4 +59,5 @@ Partial Class GameForm
     End Sub
 
     Friend WithEvents RestartButton As Button
+    Friend WithEvents ExitButton As Button
 End Class
